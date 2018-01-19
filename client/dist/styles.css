@@ -23,8 +23,6 @@
 .message-list-col {
   height: 75vh;
   overflow: scroll;
-  display: flex;
-  flex-direction: column-reverse;
 }
 
 /* send message div container */
@@ -81,6 +79,25 @@
   color: #ffffff;
 }
 
+<<<<<<< HEAD
 img#messageEntry {
   height:200px;
+}
+
+=======
+>>>>>>> 325b10c5a5f39c5f3b3dde8485b70996ffef0d12
+.option {
+  padding-left: 70px;
+}
+
+.optionButton {
+  width: 25px;
+}
+
+span + span {
+  padding-left: 10px;
+}
+
+.votes {
+  font-size: .85em;
 }
