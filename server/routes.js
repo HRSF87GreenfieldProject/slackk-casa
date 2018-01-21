@@ -118,9 +118,10 @@ router.post('/recover', async (req, res) => {
     }
   ]
 */
-router.get('/workspaces', async (req, res) => {
+router.get('/workspaces/:user', async (req, res) => {
   try {
-    return res.status(200).json(await db.getWorkspaces());
+    const user = req.params.user || '';
+    return res.status(200).json(await db.getWorkspaces(user));
   } catch (err) {
     return res.status(500).json(err.stack);
   }
@@ -150,13 +151,19 @@ router.post('/workspaces', async (req, res) => {
       return res.status(400).json('workspace exists');
     }
     // create the new workspace
-    await db.createWorkspace(name);
+    await db.createWorkspace(name, req.body.private, req.body.user);
     // grab updated list of workspaces
-    workspaces = await db.getWorkspaces();
+
+    workspaces = await db.getWorkspaces(req.body.user);
+
+    console.log(workspaces)
+    console.log('name: ', name)
     // create active workspace object
     const createdId = workspaces.filter(workspace => workspace.name === name)[0].id;
+    console.log(createdId)
     createNewWorkSpaceObject(createdId);
     // send workspace list back to client
+    console.log('wsobj created')
     return res.status(201).json(workspaces);
   } catch (err) {
     return res.status(500).json(err.stack);
